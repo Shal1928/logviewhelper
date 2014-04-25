@@ -13,7 +13,6 @@ namespace LogViewHelper
         private void OnStartup(object sender, StartupEventArgs e)
         {
             AdvancedViewManager.Instance.RegisterRelation<MainViewModel, MainView>();
-            ViewModelManager.ActiveViewModels.CollectionChanged += AdvancedViewManager.Instance.OnViewModelsCoolectionChanged;
 
             AdvancedViewManager.Instance.ResolveAndShow<MainViewModel>();
         }
