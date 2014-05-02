@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using LogViewHelper.A1_ViewModels;
+using LogViewHelper.A1_ViewModels.MainViewModel;
 using LogViewHelper.A2_View;
 using UseAbilities.MVVM.Managers;
 

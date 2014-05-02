@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Controls;
 using LogViewHelper.C0_Helpers;
+using UseAbilities.WPF.Attributes;
 
 namespace LogViewHelper.A0_Models
 {
@@ -22,11 +24,19 @@ namespace LogViewHelper.A0_Models
 
         public DateTime DateTime { get; set; }
         public int MSeconds { get; set; }
+
+        [Display("Дата", 0, 2)]
+        public string DisplayDateTime { get { return String.Format("{0},{1}", DateTime.ToString("ddd dd.MM hh:mm:ss"), MSeconds); } }
+
+        [Display("Тип", 1, 1)]
         public LogLevel Level { get; set; }
         //public string ThreadName { get; set; }
-        public int Id { get; set; }
-        public string Message { get; set; }
 
+        [Display("Id", 2, 1)]
+        public int Id { get; set; }
+
+        [Display("Сообщение", 3, 7)]
+        public string Message { get; set; }
 
         #region Overriden Methods
         public override int GetHashCode()
