@@ -1,10 +1,88 @@
 ﻿<Window x:Class="LogViewHelper.A2_View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Помошник логапредставления 1.0.0.0" Height="350" Width="525">
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Dialogs="clr-namespace:UseAbilities.Controls.Dialogs;assembly=UseAbilities.Controls"
+        xmlns:Behaviors="clr-namespace:UseAbilities.WPF.Behaviors;assembly=UseAbilities.WPF"
+        Title="Помошник логапредставления 1.0.0.0" 
+        Width="700" Height="500" >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Z0_Resources\Dictionaries\GradientsDic.xaml" />
+                <ResourceDictionary Source="/UseAbilities.Visual;component/Styles\BaseAnimationBehaviorDic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
-        
-        
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>      
+
+        <Border Background="{DynamicResource AzureToSkieyGB}" BorderThickness="0" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                Grid.Column="0" Grid.Row="0" />
+
+        <Border Background="{DynamicResource WhiteGlassGB}" BorderThickness="0"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                Grid.Column="0" Grid.Row="0" />
+
+        <StackPanel Orientation="Horizontal" Margin="10,0,0,0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0">
+            <Image Source="/Z0_Resources/Images/promotion_new_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
+                   Height="32" Width="32" Margin="0,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=_loadNewFileDialog}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+
+            <Image Source="/Z0_Resources/Images/add_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
+                   Height="32" Width="32" Margin="10,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=_addNewCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,10,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0">
+            <Image Source="/Z0_Resources/Images/info_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
+                   Height="32" Width="32" Margin="0,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding SettingsCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding LogCollectionView}" AutoGenerateColumns="True"
+                  Grid.Column="0" Grid.Row="1">
+            
+            <i:Interaction.Behaviors>
+                <Behaviors:ColumnHeaderBehavior />
+            </i:Interaction.Behaviors>
+        </DataGrid>
+
+
+        <Dialogs:DependencyOpenFileDialog x:Name="_loadNewFileDialog" Title="Открыть лог" 
+                                          AddExtension="True" DefaultExt="txt" Grid.Row="0"
+                                          Filter="Файлы лога (*.log)|*.txt;|Все файлы (*.*)|*.*"
+                                          FileOkCommand="{Binding LoadNewCommand}" />
+
+        <Dialogs:DependencyOpenFileDialog x:Name="_addNewCommand" Title="Добавить лог" 
+                                          AddExtension="True" DefaultExt="txt" Grid.Row="0"
+                                          Filter="Файлы лога (*.log)|*.txt;|Все файлы (*.*)|*.*"
+                                          FileOkCommand="{Binding AddNewCommand}" />
     </Grid>
 </Window>

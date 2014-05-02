@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -53,13 +54,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="A1_ViewModels\MainViewModel\MainViewModelCommands.cs" />
+    <Compile Include="A1_ViewModels\MainViewModel\MainViewModelProperties.cs" />
+    <Compile Include="Z0_Resources\Dictionaries\GradientsDic.xaml.cs">
+      <DependentUpon>GradientsDic.xaml</DependentUpon>
+    </Compile>
     <Page Include="A2_View\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="A0_Models\LogItem.cs" />
     <Compile Include="A0_Models\LogLevel.cs" />
-    <Compile Include="A1_ViewModels\MainViewModel.cs" />
+    <Compile Include="A1_ViewModels\MainViewModel\MainViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -68,6 +74,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Z0_Resources\Dictionaries\GradientsDic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C0_Helpers\LogHeaderParserExt.cs" />
@@ -101,6 +111,10 @@
     <Folder Include="B0_Converters\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.Controls\UseAbilities.Controls.csproj">
+      <Project>{430AC6DC-ABB3-40AD-8960-9DE701320537}</Project>
+      <Name>UseAbilities.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.Extensions\UseAbilities.Extensions.csproj">
       <Project>{C3286D0A-9826-4681-AB99-E0056239D253}</Project>
       <Name>UseAbilities.Extensions</Name>
@@ -109,6 +123,21 @@
       <Project>{8AC0BF72-84A5-4E2E-9A85-1DEF2167B51E}</Project>
       <Name>UseAbilities.MVVM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.Visual\UseAbilities.Visual.csproj">
+      <Project>{9267c3c2-5d30-45cd-abf0-27e262e7ec58}</Project>
+      <Name>UseAbilities.Visual</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.WPF\UseAbilities.WPF.csproj">
+      <Project>{de840968-7f50-41f7-b88a-59add6b61d73}</Project>
+      <Name>UseAbilities.WPF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Z0_Resources\Images\add_32.png" />
+    <Resource Include="Z0_Resources\Images\find_32.png" />
+    <Resource Include="Z0_Resources\Images\info_32.png" />
+    <Resource Include="Z0_Resources\Images\process_32.png" />
+    <Resource Include="Z0_Resources\Images\promotion_new_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
