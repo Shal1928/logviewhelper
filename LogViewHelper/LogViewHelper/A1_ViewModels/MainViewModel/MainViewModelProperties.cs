@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LogViewHelper.A0_Models;
+using UseAbilities.IoC.Attributes;
+using UseAbilities.IoC.Stores;
 
 namespace LogViewHelper.A1_ViewModels.MainViewModel
 {
     public partial class MainViewModel
     {
+        [InjectedProperty]
+        public IFileReadStore<IEnumerable<LogItem>> LogStore { get; set; }
+
         public virtual ICollectionView LogCollectionView { get; set;}
-        public virtual string FileName {get; set;}
     }
 }

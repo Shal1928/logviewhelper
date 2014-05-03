@@ -1,6 +1,6 @@
 ﻿namespace LogViewHelper.A0_Models
 {
-    public enum LogLevel
+    public enum LogItemType
     {
         Off = 0,
         Fatal = 1,

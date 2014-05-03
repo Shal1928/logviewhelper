@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="A1_ViewModels\MainViewModel\MainViewModelCommands.cs" />
     <Compile Include="A1_ViewModels\MainViewModel\MainViewModelProperties.cs" />
+    <Compile Include="D0_Stores\LogStore.cs" />
     <Compile Include="Z0_Resources\Dictionaries\GradientsDic.xaml.cs">
       <DependentUpon>GradientsDic.xaml</DependentUpon>
     </Compile>
@@ -64,7 +65,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="A0_Models\LogItem.cs" />
-    <Compile Include="A0_Models\LogLevel.cs" />
+    <Compile Include="A0_Models\LogItemType.cs" />
     <Compile Include="A1_ViewModels\MainViewModel\MainViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -118,6 +119,10 @@
     <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.Extensions\UseAbilities.Extensions.csproj">
       <Project>{C3286D0A-9826-4681-AB99-E0056239D253}</Project>
       <Name>UseAbilities.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.IoC\UseAbilities.IoC.csproj">
+      <Project>{B855AE04-A938-472C-BA0A-1A546D5A3FEB}</Project>
+      <Name>UseAbilities.IoC</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.MVVM\UseAbilities.MVVM.csproj">
       <Project>{8AC0BF72-84A5-4E2E-9A85-1DEF2167B51E}</Project>
