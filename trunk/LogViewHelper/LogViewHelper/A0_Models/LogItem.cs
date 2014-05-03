@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Controls;
 using LogViewHelper.C0_Helpers;
+using UseAbilities.Extensions.StringExt;
 using UseAbilities.WPF.Attributes;
 
 namespace LogViewHelper.A0_Models
@@ -19,7 +19,7 @@ namespace LogViewHelper.A0_Models
             MSeconds = log.GetLogMSeconds();
             Level = log.GetLogLevel();
             Id = log.GetLogId();
-            Message = log.GetLogMessage();
+            Message = log.GetLogMessage().CleanEnd();
         }
 
         public DateTime DateTime { get; set; }
@@ -29,7 +29,7 @@ namespace LogViewHelper.A0_Models
         public string DisplayDateTime { get { return String.Format("{0},{1}", DateTime.ToString("ddd dd.MM hh:mm:ss"), MSeconds); } }
 
         [Display("Тип", 1, 1)]
-        public LogLevel Level { get; set; }
+        public LogItemType Level { get; set; }
         //public string ThreadName { get; set; }
 
         [Display("Id", 2, 1)]

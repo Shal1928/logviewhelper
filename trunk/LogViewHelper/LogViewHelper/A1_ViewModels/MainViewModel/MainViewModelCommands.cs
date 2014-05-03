@@ -17,7 +17,7 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
 
         private void OnLoadNewCommand(string filename)
         {
-            FileName = filename;
+            LoadLog(filename);
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
 
         private void OnAddNewCommand(string filename)
         {
-            FileName = filename;
+            //FileName = filename;
         }
         #endregion
     }

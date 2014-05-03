@@ -15,9 +15,30 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
         {
             var testDataLogCollection = new List<LogItem>
             {
-                new LogItem{DateTime = new DateTime(2014,5,1, 12, 0, 0, 1), Level = LogLevel.Debug, Id = 43, Message = "M1", MSeconds = 2},
-                new LogItem{DateTime = new DateTime(2014,5,2, 13, 30, 11, 2), Level = LogLevel.Info, Id = 43, Message = "M2", MSeconds = 3},
-                new LogItem{DateTime = new DateTime(2014,5,1, 12, 0, 0, 3), Level = LogLevel.All, Id = 42, Message = "M3", MSeconds = 4}
+                new LogItem
+                {
+                    DateTime = new DateTime(2014, 5, 1, 12, 0, 0, 1),
+                    Level = LogItemType.Debug,
+                    Id = 43,
+                    Message = "M1",
+                    MSeconds = 2
+                },
+                new LogItem
+                {
+                    DateTime = new DateTime(2014, 5, 2, 13, 30, 11, 2),
+                    Level = LogItemType.Info,
+                    Id = 43,
+                    Message = "M2",
+                    MSeconds = 3
+                },
+                new LogItem
+                {
+                    DateTime = new DateTime(2014, 5, 1, 12, 0, 0, 3),
+                    Level = LogItemType.All,
+                    Id = 42,
+                    Message = "M3",
+                    MSeconds = 4
+                }
             };
 
             UpdateLogCollectionView(testDataLogCollection);
@@ -45,6 +66,11 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
             //var weeks = date.GetWeeksAndDaysOfMonth();
             //_isImporting = false;
             //return weeks.Select(week => WrapCalendarDays(week, SelectedMonth)).Any(logItem.Equals);
+        }
+
+        private void LoadLog(string fileName)
+        {
+            UpdateLogCollectionView(LogStore.Load(fileName));
         }
     }
 }
