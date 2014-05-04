@@ -25,17 +25,17 @@ namespace LogViewHelper.A0_Models
         public DateTime DateTime { get; set; }
         public int MSeconds { get; set; }
 
-        [Display("Дата", 0, 2)]
-        public string DisplayDateTime { get { return String.Format("{0},{1}", DateTime.ToString("ddd dd.MM hh:mm:ss"), MSeconds); } }
+        [Display("Дата", 0, DisplayColumnType.SizeToCells, "ddd dd.MM hh:mm:ss,fff")]
+        public DateTime DisplayDateTime { get { return DateTime.AddMilliseconds(MSeconds); } }
 
-        [Display("Тип", 1, 1)]
+        [Display("Тип", 1, DisplayColumnType.SizeToCells)]
         public LogItemType Level { get; set; }
         //public string ThreadName { get; set; }
 
-        [Display("Id", 2, 1)]
+        [Display("Id", 2, DisplayColumnType.SizeToCells)]
         public int Id { get; set; }
 
-        [Display("Сообщение", 3, 7)]
+        [Display("Сообщение", 3, 1)]
         public string Message { get; set; }
 
         #region Overriden Methods
