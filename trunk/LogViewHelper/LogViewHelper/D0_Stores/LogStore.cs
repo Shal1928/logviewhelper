@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using LogViewHelper.A0_Models;
 using UseAbilities.Extensions.BytesExt;
 using UseAbilities.Extensions.EnumerableExt;
@@ -44,9 +46,13 @@ namespace LogViewHelper.D0_Stores
 
             var source = bytes.GetStringUTF8();
 
+            var processedSource = Split(source, @"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]");
+
             var thatsAllFolks = false;
             while (!thatsAllFolks)
             {
+                //@"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{3}\b\]"
+                //\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]
                 var logPart = source.GetBetweenTabs();
                 if (logPart.IsEmpty())
                 {
@@ -59,5 +65,35 @@ namespace LogViewHelper.D0_Stores
 
             return result;
         }
+
+        private static List<string> Split(string source, string regExp)
+        {
+            var result = new List<string>();
+            var matches = Regex.Matches(source, regExp);
+
+            var i = 0;
+            foreach (var match in matches)
+            {
+                var nextIndex = i + 1;
+                var beginIndex = source.IndexOf(match.ToString(), StringComparison.OrdinalIgnoreCase);
+                var endIndex = nextIndex <= matches.LastIndex()
+                             ? source.IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase)
+                             : source.IndexOfLast();
+
+                if (endIndex <= beginIndex && nextIndex <= matches.LastIndex())
+                {
+                    var tempSource = source.Replace(match.ToString(), StringBaseExt.GenerateSymbols(" ", match.ToString().Length));
+                    endIndex = source.ReplaceFirst(match.ToString(), StringBaseExt.GenerateSymbols(" ", match.ToString().Length)).IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase);
+                    //endIndex = source.Remove(beginIndex, match.ToString().Length).IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase);
+                }
+                    
+                var part = source.Copy(beginIndex, endIndex);
+                result.Add(part);
+                source = source.Remove(beginIndex, part.Length);
+                i++;
+            }
+
+            return result;
+        } 
     }
 }
