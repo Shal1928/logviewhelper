@@ -4,8 +4,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Dialogs="clr-namespace:UseAbilities.Controls.Dialogs;assembly=UseAbilities.Controls"
         xmlns:Behaviors="clr-namespace:UseAbilities.WPF.Behaviors;assembly=UseAbilities.WPF"
-        Title="Помошник логапредставления 1.0.0.0" 
-        Width="700" Height="500" >
+        Title="{Binding Title}" 
+        Width="710" Height="500" 
+        MinWidth="710" MinHeight="500">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -22,6 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>      
 
@@ -66,9 +68,32 @@
             </Image>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Column="0" Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="GUID обрабатываемого объекта" Margin="0,0,0,3" />
+                <TextBox Width="200" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                <TextBlock Text="Время события" Margin="0,0,0,3" />
+                <TextBox Width="100" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                <TextBlock Text="+/-" Margin="0,0,0,3" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="30" HorizontalAlignment="Left" />
+                    <ComboBox Width="30" HorizontalAlignment="Left" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                <TextBlock Text="Поиск по сообщению" Margin="0,0,0,3" />
+                <TextBox Width="200" HorizontalAlignment="Left" />
+            </StackPanel>
+            <Button Content="Поиск" Width="50" Margin="15,0,0,0" />
+        </StackPanel>
+        
         <DataGrid ItemsSource="{Binding LogCollectionView}" 
                   AutoGenerateColumns="True" CanUserAddRows="False" CanUserDeleteRows="False"
-                  Grid.Column="0" Grid.Row="1">
+                  Grid.Column="0" Grid.Row="2">
             
             <i:Interaction.Behaviors>
                 <Behaviors:ColumnHeaderBehavior />
