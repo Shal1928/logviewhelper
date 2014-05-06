@@ -16,24 +16,20 @@ namespace LogViewHelper.A0_Models
         public LogItem(string log)
         {
             DateTime = log.GetLogDateTime();
-            MSeconds = log.GetLogMSeconds();
             Level = log.GetLogLevel();
             Id = log.GetLogId();
             Message = log.GetLogMessage().CleanEnd();
         }
 
+        [Display("Время", 0, DisplayColumnType.SizeToCells, "ddd dd.MM hh:mm:ss,fff")]
         public DateTime DateTime { get; set; }
-        public int MSeconds { get; set; }
-
-        [Display("Дата", 0, DisplayColumnType.SizeToCells, "ddd dd.MM hh:mm:ss,fff")]
-        public DateTime DisplayDateTime { get { return DateTime.AddMilliseconds(MSeconds); } }
-
+        
         [Display("Тип", 1, DisplayColumnType.SizeToCells)]
         public LogItemType Level { get; set; }
         //public string ThreadName { get; set; }
 
         [Display("Id", 2, DisplayColumnType.SizeToCells)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Display("Сообщение", 3, 1)]
         public string Message { get; set; }
@@ -44,9 +40,8 @@ namespace LogViewHelper.A0_Models
             unchecked
             {
                 var hashCode = DateTime.GetHashCode();
-                hashCode = (hashCode * 397) ^ MSeconds;
                 hashCode = (hashCode * 397) ^ (int)Level;
-                hashCode = (hashCode * 397) ^ Id;
+                hashCode = (hashCode * 397) ^ (Id != null ? Id.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Message != null ? Message.GetHashCode() : 0);
                 return hashCode;
             }
@@ -62,7 +57,7 @@ namespace LogViewHelper.A0_Models
 
         protected bool Equals(LogItem other)
         {
-            return DateTime.Equals(other.DateTime) && MSeconds == other.MSeconds && Level == other.Level && Id == other.Id && string.Equals(Message, other.Message);
+            return DateTime.Equals(other.DateTime) && Level == other.Level && string.Equals(Id, other.Id) && string.Equals(Message, other.Message);
         }
         #endregion
     }
