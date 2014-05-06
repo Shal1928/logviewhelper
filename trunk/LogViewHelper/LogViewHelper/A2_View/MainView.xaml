@@ -4,9 +4,10 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Dialogs="clr-namespace:UseAbilities.Controls.Dialogs;assembly=UseAbilities.Controls"
         xmlns:Behaviors="clr-namespace:UseAbilities.WPF.Behaviors;assembly=UseAbilities.WPF"
+        xmlns:b0Converters="clr-namespace:LogViewHelper.B0_Converters"
         Title="{Binding Title}" 
-        Width="710" Height="500" 
-        MinWidth="710" MinHeight="500">
+        Width="820" Height="500" 
+        MinWidth="820" MinHeight="500">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -41,7 +42,7 @@
                    Height="32" Width="32" Margin="0,0,0,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDown">
-                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=_loadNewFileDialog}" />
+                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=LoadNewFileDialog}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Image>
@@ -50,7 +51,7 @@
                    Height="32" Width="32" Margin="10,0,0,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDown">
-                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=_addNewCommand}" />
+                        <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=AddNewFileDialog}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Image>
@@ -70,23 +71,28 @@
 
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Column="0" Grid.Row="1">
             <StackPanel Orientation="Vertical">
+                <TextBlock Text="Id события" Margin="0,0,0,3" />
+                <TextBox Text="{Binding Id}" Width="70" HorizontalAlignment="Left" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="GUID обрабатываемого объекта" Margin="0,0,0,3" />
-                <TextBox Width="200" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding GUID}" Width="200" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="Время события" Margin="0,0,0,3" />
-                <TextBox Width="100" HorizontalAlignment="Left" />
+                <!--<TextBox Text="{Binding Time, Converter={b0Converters:StringToTimeSpanConverter}}" Width="100" HorizontalAlignment="Left" />-->
+
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="+/-" Margin="0,0,0,3" />
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Width="30" HorizontalAlignment="Left" />
-                    <ComboBox Width="30" HorizontalAlignment="Left" />
+                    <TextBox Text="{Binding Overtime}" Width="30" HorizontalAlignment="Left" />
+                    <ComboBox ItemsSource="{Binding TimeTypes}" DisplayMemberPath="View" SelectedItem="{Binding SelectedTimeType, Converter={b0Converters:TimeTypeWrapConverter}}" SelectedIndex="0" Width="51" HorizontalAlignment="Left" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="Поиск по сообщению" Margin="0,0,0,3" />
-                <TextBox Width="200" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding Pattern}" Width="200" HorizontalAlignment="Left" />
             </StackPanel>
             <Button Content="Поиск" Width="50" Margin="15,0,0,0" />
         </StackPanel>
@@ -101,12 +107,12 @@
         </DataGrid>
 
 
-        <Dialogs:DependencyOpenFileDialog x:Name="_loadNewFileDialog" Title="Открыть лог" 
+        <Dialogs:DependencyOpenFileDialog x:Name="LoadNewFileDialog" Title="Открыть лог" 
                                           AddExtension="True" DefaultExt="log" Grid.Row="0"
                                           Filter="Файлы лога (*.log)|*.log;|Текстовые файлы (*.txt)|*.txt;|Все файлы (*.*)|*.*"
                                           FileOkCommand="{Binding LoadNewCommand}" />
 
-        <Dialogs:DependencyOpenFileDialog x:Name="_addNewCommand" Title="Добавить лог" 
+        <Dialogs:DependencyOpenFileDialog x:Name="AddNewFileDialog" Title="Добавить лог" 
                                           AddExtension="True" DefaultExt="log" Grid.Row="0"
                                           Filter="Файлы лога (*.log)|*.log;|Текстовые файлы (*.txt)|*.txt;|Все файлы (*.*)|*.*"
                                           FileOkCommand="{Binding AddNewCommand}" />

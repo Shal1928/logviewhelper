@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using LogViewHelper.A0_Models;
 using UseAbilities.Extensions.BytesExt;
@@ -10,7 +11,7 @@ using UseAbilities.IoC.Stores.Impl;
 
 namespace LogViewHelper.D0_Stores
 {
-    public class LogStore : IFileReadStore<IEnumerable<LogItem>>
+    public class LogStore : AbstractFileReadStore<IEnumerable<LogItem>>
     {
         private readonly BytesStore _bytesStore = new BytesStore();
 
@@ -26,15 +27,12 @@ namespace LogViewHelper.D0_Stores
 
         #endregion
 
-
-        public string FileName { get; set; }
-
-        public IEnumerable<LogItem> Load()
+        public override IEnumerable<LogItem> Load()
         {
-            return Parse(_bytesStore.Load(FileName));
+            return Parse(_bytesStore.Load(GetFileName()));
         }
 
-        public IEnumerable<LogItem> Load(string key)
+        public override IEnumerable<LogItem> Load(string key)
         {
             return Parse(_bytesStore.Load(key));
         }
@@ -48,25 +46,11 @@ namespace LogViewHelper.D0_Stores
 
             var processedSource = Split(source, @"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]");
 
-            var thatsAllFolks = false;
-            while (!thatsAllFolks)
-            {
-                //@"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{3}\b\]"
-                //\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]
-                var logPart = source.GetBetweenTabs();
-                if (logPart.IsEmpty())
-                {
-                    logPart = source;
-                    thatsAllFolks = true;
-                }
-                else source = source.Remove(0, logPart.Length);
-                if(!logPart.IsNullOrEmptyOrSpaces()) result.Add(new LogItem(logPart));
-            }
-
+            result.AddRange(processedSource.Select(logPart => new LogItem(logPart)));
             return result;
         }
 
-        private static List<string> Split(string source, string regExp)
+        private static IEnumerable<string> Split(string source, string regExp)
         {
             var result = new List<string>();
             var matches = Regex.Matches(source, regExp);
@@ -81,12 +65,8 @@ namespace LogViewHelper.D0_Stores
                              : source.IndexOfLast();
 
                 if (endIndex <= beginIndex && nextIndex <= matches.LastIndex())
-                {
-                    var tempSource = source.Replace(match.ToString(), StringBaseExt.GenerateSymbols(" ", match.ToString().Length));
                     endIndex = source.ReplaceFirst(match.ToString(), StringBaseExt.GenerateSymbols(" ", match.ToString().Length)).IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase);
-                    //endIndex = source.Remove(beginIndex, match.ToString().Length).IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase);
-                }
-                    
+
                 var part = source.Copy(beginIndex, endIndex);
                 result.Add(part);
                 source = source.Remove(beginIndex, part.Length);
@@ -94,6 +74,6 @@ namespace LogViewHelper.D0_Stores
             }
 
             return result;
-        } 
+        }
     }
 }

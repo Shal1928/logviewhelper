@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using LogViewHelper.A0_Models;
 using UseAbilities.Extensions.StringExt;
 
@@ -6,40 +7,23 @@ namespace LogViewHelper.C0_Helpers
 {
     public static class LogHeaderParserExt
     {
-        //         10        20        30        40        50        60        70        80        90
-        //012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
-        //[30.04.2014 11:34:06,971] INFO  [QueueItemExecutor_OUTBOX_Worker background task processing4709]
-
-        public static DateTime GetLogDateTime(this string value, int beginIndex = 2, int endIndex = 20)
+        public static DateTime GetLogDateTime(this string value)
         {
-            return DateTime.Parse(value.Copy(beginIndex, endIndex));
-        }
-
-        public static int GetLogMSeconds(this string value, int beginIndex = 22, int endIndex = 24)
-        {
-            return value.IsNullOrEmptyOrSpaces() ? 0 : int.Parse(value.Copy(beginIndex, endIndex));
+            var dateTime = Regex.Match(value, @"\d{1,2}[.]\d{1,2}[.]\d{2,4}[ ]\d{1,2}[:]\d{1,2}[:]\d{1,2}[.,]\d{0,3}").ToString();
+            return dateTime.IsNullOrEmptyOrSpaces() ? new DateTime() : DateTime.Parse(dateTime.Replace(",", "."));
         }
 
         public static LogItemType GetLogLevel(this string value)
         {
-            var indexOfBkt = value.IndexOfNext("]");
-            value = value.Remove(0, indexOfBkt);
-            indexOfBkt = value.IndexOfPreview("[");
-            value = value.Remove(indexOfBkt, value.Length - indexOfBkt);
-            value = value.Trim().FirstCapital();
-
-            return (LogItemType)Enum.Parse(typeof(LogItemType), value);
+            var level = Regex.Match(value, @"[ ][A-Z]{3,5}[ ]").ToString().Trim().FirstCapital();
+            return (LogItemType)Enum.Parse(typeof(LogItemType), level);
         }
 
-        public static int GetLogId(this string value, string anchor = "processing", bool removeLast = true)
+        public static string GetLogId(this string value, bool isFull = false)
         {
-            var indexOfAnchor = value.IndexOf(anchor, StringComparison.Ordinal);
-            value = value.Remove(0, indexOfAnchor + anchor.Length);
-            if (removeLast) value = value.RemoveLast();
-            var indexOfBkt = value.IndexOfPreview("]");
-            value = value.Copy(0, indexOfBkt);
-
-            return value.IsNullOrEmptyOrSpaces() ? 0 : int.Parse(value);
+            var regExp = isFull ? @"[ ]\[.*\S.*\]" : @"\d{1,10}\]";
+            var id = Regex.Match(value, regExp).ToString().Trim().ClearEdges("[","]");
+            return id;
         }
 
         public static string GetLogMessage(this string value, string anchor = "\n")
