@@ -76,11 +76,11 @@
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Column="0" Grid.Row="1">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Id события" Margin="0,0,0,3" />
-                <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Width="70" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding Id, Converter={converters:SplitStringToArrayConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged}" Width="70" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="GUID обрабатываемого объекта" Margin="0,0,0,3" />
-                <TextBox Text="{Binding GUID, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding GUID, Converter={converters:SplitStringToArrayConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="Время события" Margin="0,0,0,3" />
