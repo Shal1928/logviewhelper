@@ -1,7 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows.Input;
 using LogViewHelper.A0_Models;
+using LogViewHelper.C0_Helpers;
 using UseAbilities.Extensions.EnumerableExt;
-using UseAbilities.Extensions.StringExt;
 using UseAbilities.MVVM.Command;
 
 namespace LogViewHelper.A1_ViewModels.MainViewModel
@@ -60,7 +61,8 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
                 var logItem = item as LogItem;
                 if (logItem == null) return false;
 
-                if (!Id.IsNullOrEmptyOrSpaces() && logItem.Id != Id) return false;
+                if (!Id.IsNullOrEmpty() && !Id.Contains(logItem.Id)) return false;
+                if (!GUID.IsNullOrEmpty() && !GUID.Contains(logItem.GUID)) return false;
                 if (logItem.DateTime < lowerEdge || logItem.DateTime > upperEdge) return false;
                 if (!Pattern.IsNullOrEmpty() && !logItem.Message.Contains(Pattern)) return false;
 

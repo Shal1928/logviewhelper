@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using LogViewHelper.A0_Models;
+using LogViewHelper.C0_Helpers;
 using UseAbilities.Extensions.BytesExt;
 using UseAbilities.Extensions.EnumerableExt;
+using UseAbilities.Extensions.ObjectExt;
 using UseAbilities.Extensions.StringExt;
 using UseAbilities.IoC.Stores;
 using UseAbilities.IoC.Stores.Impl;
@@ -43,14 +45,13 @@ namespace LogViewHelper.D0_Stores
             if (bytes.IsNullOrEmpty()) return result;
 
             var source = bytes.GetStringUTF8();
-
-            var processedSource = Split(source, @"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]");
-
-            result.AddRange(processedSource.Select(logPart => new LogItem(logPart)));
+            var idGuidDic = new Dictionary<string, string>();
+            var processedSource = Split(source, ref idGuidDic, @"\[\b\d{2}[.]?\d{2}[.]?\d{4}[ ]?\d{2}[:]?\d{2}[:]?\d{2}[,]?\d{1,3}\b\][ ]{0,3}\w{3,5}[ ]{0,3}\[\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}[ ]{0,3}\w{1,100}\]");
+            result.AddRange(processedSource.Select(logPart => new LogItem(logPart, idGuidDic)));
             return result;
         }
 
-        private static IEnumerable<string> Split(string source, string regExp)
+        private static IEnumerable<string> Split(string source, ref Dictionary<string, string> idGuidDic, string regExp)
         {
             var result = new List<string>();
             var matches = Regex.Matches(source, regExp);
@@ -68,6 +69,11 @@ namespace LogViewHelper.D0_Stores
                     endIndex = source.ReplaceFirst(match.ToString(), StringBaseExt.GenerateSymbols(" ", match.ToString().Length)).IndexOfPreview(matches[nextIndex].ToString(), StringComparison.OrdinalIgnoreCase);
 
                 var part = source.Copy(beginIndex, endIndex);
+
+                var guidPart = part.GetMainGUID();
+                if (guidPart.NotNull())
+                    idGuidDic.Add(part.GetLogId(), guidPart.GetProcessedObjectGUID());
+                
                 result.Add(part);
                 source = source.Remove(beginIndex, part.Length);
                 i++;

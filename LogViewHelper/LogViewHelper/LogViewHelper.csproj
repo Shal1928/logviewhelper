@@ -89,7 +89,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="C0_Helpers\LogHeaderParserExt.cs" />
+    <Compile Include="C0_Helpers\LogParserExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
