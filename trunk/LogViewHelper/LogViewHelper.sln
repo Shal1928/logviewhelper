@@ -25,6 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseAbilities.WPF", "..\..\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseAbilities.XML", "..\..\UseAbilities\UseAbilities\UseAbilities.XML\UseAbilities.XML.csproj", "{F4863115-63AF-4DBC-A8EE-9771426DAEB0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11 ExternalLibraries", "11 ExternalLibraries", "{A92E0B3B-A918-4EA3-8B21-1D388A543B07}"
+	ProjectSection(SolutionItems) = preProject
+		..\11 ExternalLibraries\Xceed.Wpf.Toolkit.dll = ..\11 ExternalLibraries\Xceed.Wpf.Toolkit.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
