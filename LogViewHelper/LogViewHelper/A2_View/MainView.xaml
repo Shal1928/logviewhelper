@@ -4,20 +4,18 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:Dialogs="clr-namespace:UseAbilities.Controls.Dialogs;assembly=UseAbilities.Controls"
         xmlns:Behaviors="clr-namespace:UseAbilities.WPF.Behaviors;assembly=UseAbilities.WPF"
-        xmlns:b0Converters="clr-namespace:LogViewHelper.B0_Converters"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:test="clr-namespace:UseAbilities.WPF.Converters.Test;assembly=UseAbilities.WPF"
         xmlns:converters="clr-namespace:UseAbilities.WPF.Converters;assembly=UseAbilities.WPF"
         Title="{Binding Title}" 
-        Width="950" Height="500" 
-        MinWidth="950" MinHeight="500">
+        Width="1000" Height="500" 
+        MinWidth="1000" MinHeight="500">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Z0_Resources\Dictionaries\GradientsDic.xaml" />
                 <ResourceDictionary Source="/UseAbilities.Visual;component/Styles\BaseAnimationBehaviorDic.xaml" />
+                <!--<ResourceDictionary Source="/UseAbilities.Visual;component/Styles\Controls\Buttons\ImageSquareButtonStyle.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -42,23 +40,27 @@
 
         <StackPanel Orientation="Horizontal" Margin="10,0,0,0"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0">
-            <Image Source="/Z0_Resources/Images/promotion_new_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
+            <Button Command="{Binding ShowDialogCommand, ElementName=LoadNewFileDialog}" Width="42" Height="42" BorderThickness="0">
+                <Image Source="/Z0_Resources/Images/promotion_new_32.png"
+                       Height="32" Width="32" />
+            </Button>
+            <!--<Image Source="/Z0_Resources/Images/promotion_new_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
                    Height="32" Width="32" Margin="0,0,0,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDown">
                         <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=LoadNewFileDialog}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </Image>
+            </Image>-->
 
-            <Image Source="/Z0_Resources/Images/add_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
+            <!--<Image Source="/Z0_Resources/Images/add_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
                    Height="32" Width="32" Margin="10,0,0,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDown">
                         <i:InvokeCommandAction Command="{Binding ShowDialogCommand, ElementName=AddNewFileDialog}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </Image>
+            </Image>-->
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,10,0"
@@ -74,27 +76,62 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Column="0" Grid.Row="1">
-            <StackPanel Orientation="Vertical">
+            <!--Style="{DynamicResource MouseHoverBehaviorStyle}"-->
+            <!--Style="{DynamicResource ImageSquareButtonStyle}"-->
+            <Button Command="{Binding ClearFilterCommand}" Width="42" Height="42">
+                <Image Source="/Z0_Resources/Images/trash_32.png"
+                       Height="32" Width="32" />                
+            </Button>
+
+            <StackPanel Orientation="Vertical" Margin="25,0,0,0">
                 <TextBlock Text="Id события" Margin="0,0,0,3" />
-                <TextBox Text="{Binding Id, Converter={converters:SplitStringToArrayConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged}" Width="70" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding Id, Converter={converters:SplitStringToListConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="70" HorizontalAlignment="Left">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="GUID обрабатываемого объекта" Margin="0,0,0,3" />
-                <TextBox Text="{Binding GUID, Converter={converters:SplitStringToArrayConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding GUID, Converter={converters:SplitStringToListConverter}, ConverterParameter=' ', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                         FontSize="7pt" Width="200" Height="22" HorizontalAlignment="Left">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
-                <TextBlock Text="Время события" Margin="0,0,0,3" />
-                <xctk:DateTimePicker Width="200" Value="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+                <CheckBox Content="Время события" x:Name="TimeFilterSwitch" Margin="0,0,0,3" IsChecked="{Binding TimeFilterSwitch}" />
+                <xctk:DateTimePicker Value="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"
+                                     IsEnabled="{Binding IsChecked, ElementName=TimeFilterSwitch}" Width="200" Height="22"  />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="+/-" Margin="0,0,0,3" />
-                <xctk:TimePicker Value="{Binding Overtime, UpdateSourceTrigger=PropertyChanged}" TimeInterval="0:10:0" Format="Custom" FormatString="HH:mm:ss" Width="100" HorizontalAlignment="Left" />
+                <xctk:TimePicker Value="{Binding Overtime, UpdateSourceTrigger=PropertyChanged}" TimeInterval="0:10:0" Format="Custom" FormatString="HH:mm:ss" 
+                                 IsEnabled="{Binding IsChecked, ElementName=TimeFilterSwitch}" Width="100" Height="22" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="15,0,0,0">
                 <TextBlock Text="Поиск по сообщению" Margin="0,0,0,3" />
-                <TextBox Text="{Binding Pattern, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left" />
+                <TextBox Text="{Binding Pattern, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
             </StackPanel>
-            <Button Content="Поиск" Command="{Binding SearchCommand}" Width="50" Margin="15,0,0,0" />
+
+            <Button Command="{Binding SearchCommand}" Margin="25,3,0,0" Width="42" Height="42">
+                <Image Source="/Z0_Resources/Images/find_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}" 
+                   Height="32" Width="32" />                
+            </Button>
+            <!--<Image Source="/Z0_Resources/Images/find_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}" 
+                   Height="32" Width="32" Margin="25,3,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>-->
+
         </StackPanel>
         
         <DataGrid ItemsSource="{Binding LogCollectionView}" 
