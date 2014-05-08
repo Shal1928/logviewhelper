@@ -117,7 +117,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Z0_Resources\Images\trash_32.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\UseAbilities\UseAbilities\UseAbilities.Controls\UseAbilities.Controls.csproj">
       <Project>{430AC6DC-ABB3-40AD-8960-9DE701320537}</Project>
