@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary x:Class="LogViewHelper.Z0_Resources.Dictionaries.DataGridDic"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:B1Behaviors="clr-namespace:LogViewHelper.B1_Behaviors"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Z0_Resources\Dictionaries\GradientsDic.xaml" />
@@ -141,12 +143,19 @@
             <Border Background="{TemplateBinding ContentControl.Background}" BorderBrush="Transparent" 
                     Grid.Column="0" Grid.Row="0"/>
 
+            <WrapPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                
+            </WrapPanel>
             <ContentPresenter VerticalAlignment="Center"
                               Content="{TemplateBinding ContentControl.Content}" 
                               Margin="5,3,5,3"
                               ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
                               ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" 
-                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}">
+                <i:Interaction.Behaviors>
+                    <B1Behaviors:TextHiglightPresenterBehavior />
+                </i:Interaction.Behaviors>
+            </ContentPresenter>
 
 
 
