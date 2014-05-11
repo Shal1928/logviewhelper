@@ -64,6 +64,7 @@
     <Compile Include="A1_ViewModels\MainViewModel\MainViewModelProperties.cs" />
     <Compile Include="B0_Converters\StringToTimeSpanConverter.cs" />
     <Compile Include="B0_Converters\TimeTypeWrapConverter.cs" />
+    <Compile Include="B1_Behaviors\TextHiglightPresenterBehavior.cs" />
     <Compile Include="D0_Stores\LogStore.cs" />
     <Compile Include="Z0_Resources\Dictionaries\DataGridDic.xaml.cs">
       <DependentUpon>DataGridDic.xaml</DependentUpon>
@@ -160,6 +161,7 @@
     <Resource Include="Z0_Resources\Images\process_32.png" />
     <Resource Include="Z0_Resources\Images\promotion_new_32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
