@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Z0_Resources\Dictionaries\GradientsDic.xaml" />
+                <ResourceDictionary Source="/Z0_Resources\Dictionaries\DataGridDic.xaml" />
                 <ResourceDictionary Source="/UseAbilities.Visual;component/Styles\BaseAnimationBehaviorDic.xaml" />
                 <!--<ResourceDictionary Source="/UseAbilities.Visual;component/Styles\Controls\Buttons\ImageSquareButtonStyle.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
@@ -133,9 +134,8 @@
             </Image>-->
 
         </StackPanel>
-        
-        <DataGrid ItemsSource="{Binding LogCollectionView}" 
-                  AutoGenerateColumns="True" CanUserAddRows="False" CanUserDeleteRows="False"
+
+        <DataGrid ItemsSource="{Binding LogCollectionView}" Style="{DynamicResource LogViewDataGridStyle}"
                   Grid.Column="0" Grid.Row="2">
             
             <i:Interaction.Behaviors>

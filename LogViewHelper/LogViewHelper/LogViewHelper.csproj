@@ -65,6 +65,9 @@
     <Compile Include="B0_Converters\StringToTimeSpanConverter.cs" />
     <Compile Include="B0_Converters\TimeTypeWrapConverter.cs" />
     <Compile Include="D0_Stores\LogStore.cs" />
+    <Compile Include="Z0_Resources\Dictionaries\DataGridDic.xaml.cs">
+      <DependentUpon>DataGridDic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Z0_Resources\Dictionaries\GradientsDic.xaml.cs">
       <DependentUpon>GradientsDic.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Z0_Resources\Dictionaries\DataGridDic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Z0_Resources\Dictionaries\GradientsDic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

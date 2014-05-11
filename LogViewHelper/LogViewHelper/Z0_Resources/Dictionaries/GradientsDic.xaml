@@ -14,4 +14,6 @@
         <GradientStop Color="{StaticResource Azure}" Offset="0.4"/>
         <GradientStop Color="{StaticResource Skiey}" Offset="1"/>
     </LinearGradientBrush>
+    
+    
 </ResourceDictionary>
