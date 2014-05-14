@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using LogViewHelper.A0_Models;
 using LogViewHelper.C0_Helpers;
 using UseAbilities.Extensions.BytesExt;
+using UseAbilities.Extensions.Dictionaries;
 using UseAbilities.Extensions.EnumerableExt;
 using UseAbilities.Extensions.ObjectExt;
 using UseAbilities.Extensions.StringExt;
@@ -72,7 +73,7 @@ namespace LogViewHelper.D0_Stores
 
                 var guidPart = part.GetMainGUID();
                 if (guidPart.NotNull())
-                    idGuidDic.Add(part.GetLogId(), guidPart.GetProcessedObjectGUID());
+                    idGuidDic.UniqPut(part.GetLogId(), guidPart.GetProcessedObjectGUID());
                 
                 result.Add(part);
                 source = source.Remove(beginIndex, part.Length);
