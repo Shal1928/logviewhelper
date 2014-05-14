@@ -26,8 +26,9 @@ namespace LogViewHelper.C0_Helpers
 
         public static string GetLogId(this string value, bool isFull = false)
         {
-            var regExp = isFull ? @"[ ]\[.*\S.*\]" : @"\d{1,10}\]";
-            var id = Regex.Match(value, regExp).ToString().Trim().ClearEdges("[","]");
+            //var regExp = isFull ? @"[ ]\[.*\S.*\]" : @"\d{1,10}\]";
+            var regExp = isFull ? @"[ ]\[.*\S.*\]" : @"[a-zA-Z](\d+)\]";
+            var id = Regex.Match(value, regExp).Groups[1].ToString().Trim().ClearEdges("[","]");
             return id;
         }
 
