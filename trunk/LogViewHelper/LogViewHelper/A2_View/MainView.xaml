@@ -45,6 +45,11 @@
                 <Image Source="/Z0_Resources/Images/promotion_new_32.png"
                        Height="32" Width="32" />
             </Button>
+
+            <Button Command="{Binding ShowDialogCommand, ElementName=AddNewFileDialog}" Width="42" Height="42" Margin="10,0,0,0" BorderThickness="0">
+                <Image Source="/Z0_Resources/Images/add_32.png"
+                       Height="32" Width="32" />
+            </Button>
             <!--<Image Source="/Z0_Resources/Images/promotion_new_32.png" Style="{DynamicResource MouseHoverBehaviorStyle}"
                    Height="32" Width="32" Margin="0,0,0,0">
                 <i:Interaction.Triggers>
