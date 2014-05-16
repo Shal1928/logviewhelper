@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
 using LogViewHelper.A0_Models;
 using LogViewHelper.A1_ViewModels.Base;
+using UseAbilities.Extensions.EnumerableExt;
+using UseAbilities.Extensions.ObjectExt;
 
 namespace LogViewHelper.A1_ViewModels.MainViewModel
 {
@@ -40,9 +43,18 @@ namespace LogViewHelper.A1_ViewModels.MainViewModel
             //return weeks.Select(week => WrapCalendarDays(week, SelectedMonth)).Any(logItem.Equals);
         }
 
-        private void LoadLog(string fileName)
+        private void LoadLog(string fileName, bool isNew = true)
         {
-            UpdateLogCollectionView(LogStore.Load(fileName));
+            IEnumerable<LogItem> logItems;
+            if (isNew) logItems = LogStore.Load(fileName);
+            else
+            {
+                logItems = new List<LogItem>();
+                if (LogCollectionView.NotNull() && !LogCollectionView.SourceCollection.IsNullOrEmpty()) logItems.ToList().AddRange((IEnumerable<LogItem>)LogCollectionView.SourceCollection);
+                logItems.ToList().AddRange(LogStore.Load(fileName));
+            }
+
+            UpdateLogCollectionView(logItems);
         }
     }
 }
